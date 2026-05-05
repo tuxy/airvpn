@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["fetch_status"],"struct":["ApiError","Continent","Country","Planet","RoutingEntry","Server","StatusResponse"]};

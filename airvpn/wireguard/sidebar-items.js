@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["extract_wg_config","find_server","list_servers","resolve_endpoint"],"struct":["ServerInfo","WireGuardConfig"]};
