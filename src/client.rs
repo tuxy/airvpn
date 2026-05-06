@@ -26,6 +26,8 @@
 
 use std::time::Duration;
 
+use log::warn;
+
 use crate::constants::{
     DEFAULT_BOOTSTRAP_URLS, DEFAULT_RSA_EXPONENT, DEFAULT_RSA_MODULUS, DEFAULT_WIREGUARD_PORT,
     DOCUMENT_VERSION,
@@ -140,6 +142,12 @@ impl AirVPNBuilder {
             .bootstrap_urls
             .unwrap_or_else(|| DEFAULT_BOOTSTRAP_URLS.iter().map(|s| s.to_string()).collect());
 
+        for url in &bootstrap_urls {
+            if url.starts_with("http://") {
+                warn!("Bootstrap URL \"{url}\" uses HTTP instead of HTTPS; this exposes encrypted credentials to network attackers");
+            }
+        }
+
         let http_client = reqwest::Client::builder()
             .timeout(self.timeout)
             .build()?;
@@ -195,6 +203,10 @@ impl AirVPNBuilder {
                     .collect();
                 new_urls.extend(old_urls);
                 updated_urls = new_urls;
+            }
+
+            for url in updated_urls.iter().filter(|u| u.starts_with("http://")) {
+                warn!("Server-provided bootstrap URL \"{url}\" uses HTTP instead of HTTPS; this exposes encrypted credentials to network attackers");
             }
         }
 

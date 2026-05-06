@@ -15,12 +15,9 @@ pub const DEFAULT_RSA_EXPONENT: &str = "AQAB";
 ///
 /// The client will attempt each URL in order until one responds successfully.
 /// After fetching the manifest, this list is updated with fresh URLs from the server.
+/// Should be HTTPS to prevent man-in-the-middle attack, but users can change this if they want
 pub const DEFAULT_BOOTSTRAP_URLS: &[&str] = &[
-    "http://63.33.78.166",
-    "http://54.93.175.114",
-    "http://82.196.3.205",
-    "http://63.33.116.50",
-    "http://bootme.org",
+    "https://bootme.org",
 ];
 
 /// Eddie client version string sent in requests.
